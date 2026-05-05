@@ -4,14 +4,17 @@ const router = express.Router();
 const { exchangeCode, getUserInfo } = require('../utils/roblox');
 const User = require('../models/User');
 
-// POST /api/auth/callback - Called from OAuth callback
-router.post('/callback', async (req, res) => {
+router.get('/roblox', (req, res) => {   // Start verification
+  // ... (your existing /auth/roblox logic)
+});
+
+router.get('/callback', async (req, res) => {
   try {
-    const { code, discordId } = req.body;
-    // ... verification logic later
-    res.json({ success: true });
+    const { code, state } = req.query;
+    // Add full logic here later (verify state, save to MongoDB, etc.)
+    res.send('<h1>✅ Verification Successful! You can return to Discord.</h1>');
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).send('Verification failed.');
   }
 });
 

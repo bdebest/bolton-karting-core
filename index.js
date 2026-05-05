@@ -26,6 +26,7 @@ const modRoutes = require('./routes/moderation') || { use: () => {} };
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/moderation', modRoutes);
+app.use('/api/tickets', require('./routes/tickets'));
 
 // Health Check
 app.get('/health', (req, res) => {
