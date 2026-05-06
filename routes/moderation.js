@@ -6,25 +6,14 @@ const { authenticateBot } = require('../middleware/auth');
 
 router.post('/log', authenticateBot, async (req, res) => {
   try {
-    const { discordId, action, reason, moderator, source } = req.body;
+    const { discordId, action, reason, moderator, source = 'discord' } = req.body;
 
-    let user = await User.findOne({ discordId });
+    let user = await User.findOne({ discordId }) || new User({ discordId });
 
-    if (!user) {
-      user = new User({ discordId });
-    }
-
-    user.moderationHistory.push({
-      action,
-      reason,
-      moderator,
-      timestamp: new Date(),
-      source: source || 'discord' // "discord" or "roblox"
-    });
-
+    user.moderationHistory.push({ action, reason, moderator, source });
     await user.save();
 
-    res.json({ success: true, message: 'Moderation logged' });
+    res.json({ success: true, message: 'Moderation logged successfully' });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: error.message });

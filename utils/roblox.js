@@ -6,7 +6,7 @@ const exchangeCode = async (code) => {
     client_id: process.env.ROBLOX_CLIENT_ID,
     client_secret: process.env.ROBLOX_CLIENT_SECRET,
     grant_type: 'authorization_code',
-    code,
+    code: code,
     redirect_uri: process.env.REDIRECT_URI,
   }, {
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
